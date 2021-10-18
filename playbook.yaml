@@ -1,0 +1,13 @@
+---
+- name: writting a playbook
+  hosts: linoop
+  tasks:
+    - name: Installing httpd
+      yum:
+        name: httpd
+        state: present
+
+    - name: starting httpd
+      service:
+        name: httpd
+        state: started
