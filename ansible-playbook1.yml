@@ -1,0 +1,8 @@
+---
+- name: creating first file using ansible with Naveed Akhtar
+  hosts: linoop
+  tasks:
+  - name: creating a new file
+    file:
+      name: /tmp/file.txt
+      state: touch
