@@ -1,3 +1,4 @@
 [linoop]
-server
-host
+server_node
+managed_node1
+managed_node2
