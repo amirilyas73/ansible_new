@@ -1,0 +1,21 @@
+---
+- name: installing telnet vsftpd httpd
+  hosts: webservers
+  tasks:
+  - name: now lets begin
+    yum: 
+      name: telnet,vsftpd,httpd
+      state: latest
+  
+  - name: starting above services as well enabling
+    service:
+      name: '{{ item }}'
+      state: started
+      enabled: yes
+    loop:
+      - vsftpd
+      - httpd
+
+
+
+      

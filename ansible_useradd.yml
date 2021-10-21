@@ -1,0 +1,12 @@
+---
+- name: adding users
+  hosts: linoop
+  tasks:
+
+  - name: adding user
+    user:
+      name: john
+      password: {{ j | password_hash('sha512') }
+      uid: 3000
+      append: yes
+      shell: /bin/bash

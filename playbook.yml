@@ -1,0 +1,13 @@
+---
+- name : adding user
+  hosts: linoop
+  tasks:
+  - name: create a group linoop
+    group:
+      name: linoop
+  - name: add user navid
+    user: 
+      name: navid
+      uid: 1003
+      group: linoop
+
