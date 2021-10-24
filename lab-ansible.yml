@@ -1,0 +1,65 @@
+---
+- name: MY FIRST PLAY BOOK AT LINOO TEK
+  hosts: webservers
+  tasks: 
+  - name: INSTALLING TELNET AND VSFTPD
+    yum: 
+     name:
+      - telnet-server
+      - vsftpd
+      - httpd
+     state: latest
+  - name: ADD APACHI TO FIREWALL
+    firewalld:
+     service: http
+     permanent: yes
+     state: enabled
+  - name: STARTING AND ENABLING TELNET VSFTPD AND HTTP
+    service: 
+     name: "{{ item }}"
+     state: started
+     enabled: yes
+    loop: 
+      - telnet.socket
+      - vsftpd
+      - httpd
+- name: WORKING ON APPSERVERS
+  hosts: appservers
+  tasks:
+  - name: creating a user john
+    user:
+      name: john
+      groups: wheel
+      append: yes
+      state: present
+  - name: creating a directory under /tmp
+    file:
+      path: /tmp/repose
+      state: directory
+      owner: john
+      group: wheel
+      mode: u=rwx,g=rwx,o=rw
+  - name: copying files
+    copy:
+      src: /etc/hosts
+      dest: /tmp/
+  - name: fetching files
+    fetch:
+      src: /var/log/messages
+      dest: /root/file_messages-{{ inventory_hostname }}
+      flat: yes
+      validate_checksum: no
+  - name: setting selinux in permissive mode
+    selinux:
+      policy: targeted
+      state: permissive
+- name:  COPY /ROOT/FILE_MESSAGES TO /TMP AND NAME VAR_MESSAGES
+  hosts: controlnode
+  tasks:
+  - name: COPY /ROOT/FILE_MESSAGES TO /TMP AND NAME VAR_MESSAGES
+    copy: 
+     src: /root/file_messages-{{ item }}
+     dest: /tmp/var_messages-{{ item }}
+    loop:
+     - managednode1
+     - managednode2
