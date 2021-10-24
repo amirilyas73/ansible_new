@@ -1,4 +1,8 @@
-[linoop]
-server_node
-managed_node1
-managed_node2
+[webservers]
+managednode1
+managednode2
+[appservers]
+managednode1
+managednode2
+[controlnode]
+servernode
